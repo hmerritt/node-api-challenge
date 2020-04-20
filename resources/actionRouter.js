@@ -37,6 +37,22 @@ router.put("/:id", validateActionBody(), validateActionId(), (req, res, next) =>
         });
 });
 
+//  Delete action
+router.delete("/:id", validateActionId(), (req, res, next) => {
+    db.remove(req.action.id)
+        .then((success) => {
+            if (success)
+            {
+                res.send(req.action);
+            } else {
+                next(error);
+            }
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
 //  Check if action id exists
 function validateActionId() {
     return (req, res, next) => {
