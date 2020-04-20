@@ -13,6 +13,7 @@ I need this code, but don't know where, perhaps should make some middleware, don
 Go code!
 */
 const express = require("express");
+const actionRouter = require("./resources/actionRouter");
 const projectRouter = require("./resources/projectRouter");
 
 //  Create server
@@ -22,6 +23,7 @@ const port   = process.env.PORT || 8000;
 
 //  Apply middleware
 server.use(express.json());
+server.use("/actions", actionRouter);
 server.use("/projects", projectRouter);
 
 //  Root message
