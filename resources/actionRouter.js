@@ -15,6 +15,17 @@ router.get("/:id", validateActionId(), (req, res, next) => {
     res.send(req.action);
 });
 
+//  Add new action
+router.post("/", validateActionBody(), (req, res, next) => {
+    db.insert(req.actionBody)
+        .then((action) => {
+            res.send(action);
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
 //  Check if action id exists
 function validateActionId() {
     return (req, res, next) => {
@@ -27,7 +38,7 @@ function validateActionId() {
                     req.action = action;
                     next();
                 } else {
-                    //  Project does not exist
+                    //  Action does not exist
                     res.status(400).json({
                         message: "invalid action id",
                     });
@@ -37,6 +48,34 @@ function validateActionId() {
                 //  Server failed when accessing database
                 next(error);
             });
+    };
+}
+
+//  Validate the request body
+function validateActionBody() {
+    return (req, res, next) => {
+        //  Check that the request body exists
+        if (req.body) {
+            //  Check for the required key
+            if (req.body.project_id && req.body.description && req.body.notes) {
+                //  Add action body to request
+                req.actionBody = {
+                    project_id: req.body.project_id,
+                    description: req.body.description,
+                    notes: req.body.notes,
+                    completed: (req.body.completed || false)
+                };
+                next();
+            } else {
+                res.status(400).json({
+                    message: "missing required fields; project_id,description,notes",
+                });
+            }
+        } else {
+            res.status(400).json({
+                message: "missing user data",
+            });
+        }
     };
 }
 
