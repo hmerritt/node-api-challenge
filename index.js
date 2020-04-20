@@ -12,3 +12,17 @@ I need this code, but don't know where, perhaps should make some middleware, don
 
 Go code!
 */
+const express = require("express");
+
+//  Create server
+//  Get port from env (use 8000 as fallback)
+const server = express();
+const port   = process.env.PORT || 8000;
+
+//  Apply middleware
+server.use(express.json());
+
+//  Start server
+server.listen(port, () => {
+    console.log(`Server listening at localhost:${port}`);
+})
