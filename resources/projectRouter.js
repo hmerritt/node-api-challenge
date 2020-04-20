@@ -15,6 +15,33 @@ router.get("/:id", validateProjectId(), (req, res, next) => {
     res.send(req.project);
 });
 
+//  Add new project
+router.post("/", validateProjectBody(), (req, res, next) => {
+    db.insert(req.projectBody)
+        .then((project) => {
+            res.send(project);
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
+//  Delete project
+router.delete("/:id", validateProjectId(), (req, res, next) => {
+    db.remove(req.project.id)
+        .then((success) => {
+            if (success)
+            {
+                res.send(req.project);
+            } else {
+                next(error);
+            }
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
 //  Check if project id exists
 function validateProjectId() {
     return (req, res, next) => {
@@ -37,6 +64,33 @@ function validateProjectId() {
                 //  Server failed when accessing database
                 next(error);
             });
+    };
+}
+
+//  Validate the request body
+function validateProjectBody() {
+    return (req, res, next) => {
+        //  Check that the request body exists
+        if (req.body) {
+            //  Check for the required key
+            if (req.body.name && req.body.description) {
+                //  Add project body to request
+                req.projectBody = {
+                    name: req.body.name,
+                    description: req.body.description,
+                    completed: (req.body.completed || false)
+                };
+                next();
+            } else {
+                res.status(400).json({
+                    message: "missing required fields; name,description",
+                });
+            }
+        } else {
+            res.status(400).json({
+                message: "missing user data",
+            });
+        }
     };
 }
 
