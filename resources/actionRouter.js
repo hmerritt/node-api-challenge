@@ -9,6 +9,12 @@ router.get("/", validateActionId(), (req, res, next) => {
     res.send(req.action);
 });
 
+//  Get individual action
+//  -> object
+router.get("/:id", validateActionId(), (req, res, next) => {
+    res.send(req.action);
+});
+
 //  Check if action id exists
 function validateActionId() {
     return (req, res, next) => {
