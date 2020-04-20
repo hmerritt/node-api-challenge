@@ -26,6 +26,17 @@ router.post("/", validateProjectBody(), (req, res, next) => {
         });
 });
 
+//  Update project
+router.put("/:id", validateProjectBody(), validateProjectId(), (req, res, next) => {
+    db.update(req.project.id, req.projectBody)
+        .then((project) => {
+            res.send(project);
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
 //  Delete project
 router.delete("/:id", validateProjectId(), (req, res, next) => {
     db.remove(req.project.id)
