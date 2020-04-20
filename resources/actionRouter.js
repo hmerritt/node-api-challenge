@@ -26,6 +26,17 @@ router.post("/", validateActionBody(), (req, res, next) => {
         });
 });
 
+//  Update action
+router.put("/:id", validateActionBody(), validateActionId(), (req, res, next) => {
+    db.update(req.action.id, req.actionBody)
+        .then((action) => {
+            res.send(action);
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
+
 //  Check if action id exists
 function validateActionId() {
     return (req, res, next) => {
