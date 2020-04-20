@@ -15,6 +15,12 @@ router.get("/:id", validateProjectId(), (req, res, next) => {
     res.send(req.project);
 });
 
+//  Get individual project actions
+//  -> object
+router.get("/:id/actions", validateProjectId(), (req, res, next) => {
+    res.send(req.project.actions);
+});
+
 //  Add new project
 router.post("/", validateProjectBody(), (req, res, next) => {
     db.insert(req.projectBody)
