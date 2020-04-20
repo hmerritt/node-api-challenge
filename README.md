@@ -38,15 +38,20 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your Team Lead.
 
-- [ ] Mention two parts of Express that you learned about this week.
+- [x] Mention two parts of Express that you learned about this week.
+    - How to manage routes server-side using http methods such as _get_, _put_, _post_ and _delete_.
 
-- [ ] Describe Middleware?
+- [x] Describe Middleware?
+    - Middleware is _injected_ into a system at specific points to carry out an additional operation, stop the flow of operations or re-route to another operation.
 
-- [ ] Describe a Resource?
+- [x] Describe a Resource?
+    - A resource is the data that a RESTful API manages. For example a _user_ or a _post_.
 
-- [ ] What can the API return to help clients know if a request was successful?
+- [x] What can the API return to help clients know if a request was successful?
+    - A _response status code_. There are standard http status codes which tell a client about the success of a request. For example _200_ means OK, and _404_ not-found.
 
-- [ ] How can we partition our application into sub-applications?
+- [x] How can we partition our application into sub-applications?
+    - We can export functions and variables into their own files by using `module.exports`. This way we can make our own libraries and import them in other files.
 
 ## Minimum Viable Product
 
