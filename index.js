@@ -12,3 +12,34 @@ I need this code, but don't know where, perhaps should make some middleware, don
 
 Go code!
 */
+const express = require("express");
+const actionRouter = require("./resources/actionRouter");
+const projectRouter = require("./resources/projectRouter");
+
+//  Create server
+//  Get port from env (use 8000 as fallback)
+const server = express();
+const port   = process.env.PORT || 8000;
+
+//  Apply middleware
+server.use(express.json());
+server.use("/actions", actionRouter);
+server.use("/projects", projectRouter);
+
+//  Root message
+server.get("/", (req, res) => {
+    res.json({message: "Hello World"});
+});
+
+//  Server error middleware
+server.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).json({
+        message: "Somthing went wrong",
+    });
+});
+
+//  Start server
+server.listen(port, () => {
+    console.log(`Server listening at localhost:${port}`);
+})
